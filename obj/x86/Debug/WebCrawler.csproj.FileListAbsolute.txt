@@ -1,0 +1,11 @@
+E:\tubes\WebCrawler\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\tubes\WebCrawler\obj\x86\Debug\WebCrawler.Properties.Resources.resources
+E:\tubes\WebCrawler\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\tubes\WebCrawler\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\tubes\WebCrawler\bin\Debug\WebCrawler.exe
+E:\tubes\WebCrawler\bin\Debug\WebCrawler.pdb
+E:\tubes\WebCrawler\bin\Debug\HtmlAgilityPack.dll
+E:\tubes\WebCrawler\bin\Debug\HtmlAgilityPack.pdb
+E:\tubes\WebCrawler\bin\Debug\HtmlAgilityPack.xml
+E:\tubes\WebCrawler\obj\x86\Debug\WebCrawler.exe
+E:\tubes\WebCrawler\obj\x86\Debug\WebCrawler.pdb
