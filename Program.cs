@@ -13,35 +13,52 @@ namespace WebCrawler
 {
     class Program
     {
-        static List<string> queryURLs;
-        static string queryURLFileName;
+        struct queryElmt
+        {
+            public string url;
+            public string folderName;
+
+        }
+        static List<queryElmt> queryURLs;
         static bool forceCrawl = true;
         static void loadQueryURL()
         {
-            queryURLs = new List<string>();
-            WordProcessor wp = new WordProcessor(queryURLFileName);
-            
+            queryURLs = new List<queryElmt>();
+            WordProcessor wp = new WordProcessor(Configuration.getCrawlerListLocation());
             while (!wp.isEOF())
             {
-                queryURLs.Add(wp.getWord());
+                queryElmt tmp;
+                tmp.url = wp.getWord();
                 wp.advanceWord();
+                tmp.folderName = wp.getWord();
+                wp.advanceWord();
+                queryURLs.Add(tmp);
             }
-            queryURLs.Add(wp.getWord());
-        }
+            wp.closeFile();
+        }        
 
         static void Main(string[] args)
         {
+            Configuration.setDefaultConfiguration();
+            Crawler.initIgnoredExtension();
+            Index.initIndexTagList();
+            //Configuration.setTraversalMode("DFS");
+            Configuration.setMaximumDepth(2);
 
-            //Crawler.initIgnoredExtension();
-            queryURLFileName = "crawlerList.conf"; loadQueryURL();
+            loadQueryURL();
             foreach(var queryURL in queryURLs)
             {
-                Console.WriteLine(queryURL);
-                //Console.WriteLine(testConnection(queryURL));
-                if (Program.forceCrawl || testConnection(queryURL))
-                    Crawler.doCrawler(queryURL, "BFS", 3);
+                break;
+                Crawler.doCrawler(queryURL.url, Configuration.getTraversalMode(), queryURL.folderName,Configuration.getMaximumDepth());
+                Crawler.saveToIndex();
+                Crawler.saveResultToFile();
             }
-            Console.WriteLine("ok");
+            Console.WriteLine("crawler complete");
+            List<Crawler.crawlElement> explorerResults =  Explorer.explore("hello", "kuliah", 10);
+            foreach (var explorerResult in explorerResults)
+            {
+                Console.WriteLine(explorerResult.url);
+            }
             while (true) ;
         }
 
@@ -60,6 +77,8 @@ namespace WebCrawler
                 return false;
             }
         }
+        
+        
     }
 
 }
